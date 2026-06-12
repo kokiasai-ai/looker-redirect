@@ -6,7 +6,6 @@
   <title>相場観ツール</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
       background: linear-gradient(135deg, #0f2544 0%, #1a3f7c 50%, #2557a7 100%);
@@ -16,7 +15,6 @@
       justify-content: center;
       padding: 20px;
     }
-
     .card {
       background: #fff;
       border-radius: 20px;
@@ -25,15 +23,10 @@
       max-width: 400px;
       width: 100%;
       text-align: center;
-      position: relative;
     }
-
     .brand {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 8px;
+      display: flex; align-items: center; justify-content: center;
+      gap: 10px; margin-bottom: 8px;
     }
     .brand-icon {
       width: 40px; height: 40px;
@@ -43,156 +36,87 @@
     }
     .brand-icon svg { width: 22px; height: 22px; fill: #fff; }
     .brand-name { font-size: 13px; font-weight: 600; color: #6b7280; letter-spacing: 0.05em; }
+    h1 { font-size: 22px; font-weight: 700; color: #111827; margin: 4px 0 6px; }
+    .subtitle { font-size: 13px; color: #6b7280; line-height: 1.6; margin-bottom: 32px; }
 
-    h1 {
-      font-size: 22px;
-      font-weight: 700;
-      color: #111827;
-      margin-bottom: 6px;
-      margin-top: 4px;
-    }
-    .subtitle {
-      font-size: 13px;
-      color: #6b7280;
-      line-height: 1.6;
-      margin-bottom: 36px;
-    }
-
-    /* States */
     .state { display: none; }
     .state.active { display: block; }
 
     /* Loading */
-    .spinner-wrap { padding: 8px 0 20px; }
     .spinner {
       width: 44px; height: 44px;
-      border: 4px solid #e5e7eb;
-      border-top-color: #2557a7;
+      border: 4px solid #e5e7eb; border-top-color: #2557a7;
       border-radius: 50%;
       animation: spin 0.75s linear infinite;
       margin: 0 auto 16px;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .loading-text { font-size: 14px; color: #6b7280; }
+    .loading-text { font-size: 14px; color: #6b7280; padding-bottom: 8px; }
 
-    /* Sign-in button fallback */
-    #g_id_onload { display: none; } /* hidden — One Tap handles UI */
-    .g-signin-area { margin-top: 4px; }
-    .g-signin-area p { font-size: 12px; color: #9ca3af; margin-bottom: 12px; }
-    .g_id_signin { display: flex; justify-content: center; }
+    /* Form */
+    .form-label {
+      display: block; font-size: 12px; font-weight: 600;
+      color: #374151; text-align: left; margin-bottom: 6px;
+      letter-spacing: 0.03em;
+    }
+    .form-input {
+      width: 100%; padding: 12px 14px;
+      border: 1.5px solid #d1d5db; border-radius: 10px;
+      font-size: 14px; color: #111827;
+      outline: none; transition: border-color 0.2s;
+    }
+    .form-input:focus { border-color: #2557a7; box-shadow: 0 0 0 3px rgba(37,87,167,0.1); }
+    .form-hint { font-size: 11px; color: #9ca3af; text-align: left; margin-top: 5px; margin-bottom: 20px; }
+    .btn {
+      display: block; width: 100%; padding: 13px;
+      background: #2557a7; color: #fff; border: none;
+      border-radius: 10px; font-size: 15px; font-weight: 600;
+      cursor: pointer; transition: background 0.15s, transform 0.1s;
+    }
+    .btn:hover { background: #1a3f7c; }
+    .btn:active { transform: scale(0.98); }
+    .btn:disabled { background: #9ca3af; cursor: not-allowed; }
 
-    /* Success / redirect */
+    /* Redirect */
     .success-icon {
-      width: 60px; height: 60px;
-      background: #d1fae5;
-      border-radius: 50%;
+      width: 60px; height: 60px; background: #d1fae5; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 16px;
-      font-size: 30px;
+      margin: 0 auto 16px; font-size: 28px;
     }
-    .success-label {
-      font-size: 12px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: #059669;
-      margin-bottom: 6px;
-    }
-    .success-title {
-      font-size: 18px;
-      font-weight: 700;
-      color: #111827;
-      margin-bottom: 8px;
-    }
-    .success-sub {
-      font-size: 13px;
-      color: #6b7280;
-      line-height: 1.6;
-      margin-bottom: 20px;
-    }
-    .progress-bar-wrap {
-      background: #e5e7eb;
-      border-radius: 9999px;
-      height: 4px;
-      overflow: hidden;
-      margin-bottom: 16px;
-    }
-    .progress-bar {
-      height: 4px;
-      background: #2557a7;
-      border-radius: 9999px;
-      animation: progress 1.5s ease forwards;
-    }
+    .success-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #059669; margin-bottom: 6px; }
+    .success-title { font-size: 18px; font-weight: 700; color: #111827; margin-bottom: 6px; }
+    .success-sub { font-size: 13px; color: #6b7280; line-height: 1.6; margin-bottom: 18px; }
+    .progress-bar-wrap { background: #e5e7eb; border-radius: 9999px; height: 4px; overflow: hidden; margin-bottom: 14px; }
+    .progress-bar { height: 4px; background: #2557a7; border-radius: 9999px; animation: progress 1.5s ease forwards; }
     @keyframes progress { from { width: 0%; } to { width: 100%; } }
     .manual-link { font-size: 12px; color: #2557a7; text-decoration: none; }
     .manual-link:hover { text-decoration: underline; }
 
     /* Error */
-    .error-icon { font-size: 44px; margin-bottom: 12px; }
-    .error-title {
-      font-size: 16px;
-      font-weight: 700;
-      color: #111827;
-      margin-bottom: 8px;
+    .error-icon { font-size: 40px; margin-bottom: 12px; }
+    .error-title { font-size: 16px; font-weight: 700; color: #111827; margin-bottom: 8px; }
+    .error-msg { font-size: 13px; color: #6b7280; line-height: 1.7; white-space: pre-wrap; margin-bottom: 16px; }
+    .email-tag { display: inline-block; background: #f3f4f6; border-radius: 6px; padding: 3px 10px; font-size: 12px; color: #374151; font-family: monospace; margin-bottom: 20px; }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 10px 20px; border: 1.5px solid #d1d5db; border-radius: 8px;
+      font-size: 13px; font-weight: 500; color: #374151; background: #fff;
+      cursor: pointer; transition: background 0.15s;
     }
-    .error-msg {
-      font-size: 13px;
-      color: #6b7280;
-      line-height: 1.7;
-      white-space: pre-wrap;
-      margin-bottom: 24px;
-    }
-    .email-tag {
-      display: inline-block;
-      background: #f3f4f6;
-      border-radius: 6px;
-      padding: 3px 10px;
-      font-size: 12px;
-      color: #374151;
-      font-family: monospace;
-      margin-bottom: 16px;
-    }
-    .btn-retry {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 10px 20px;
-      border: 1.5px solid #d1d5db;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 500;
-      color: #374151;
-      background: #fff;
-      cursor: pointer;
-      transition: background 0.15s;
-    }
-    .btn-retry:hover { background: #f9fafb; }
+    .btn-outline:hover { background: #f9fafb; }
 
-    /* Footer */
-    .card-footer {
-      margin-top: 28px;
-      padding-top: 20px;
-      border-top: 1px solid #f3f4f6;
-      font-size: 11px;
-      color: #9ca3af;
+    /* Saved badge */
+    .saved-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: #eff6ff; color: #2557a7; border-radius: 20px;
+      padding: 4px 12px; font-size: 11px; font-weight: 600;
+      margin-bottom: 16px; border: 1px solid #bfdbfe;
     }
+
+    .card-footer { margin-top: 28px; padding-top: 20px; border-top: 1px solid #f3f4f6; font-size: 11px; color: #9ca3af; }
   </style>
 </head>
 <body>
-
-<!-- ======================================================
-     Google Identity Services — One Tap
-     ① GOOGLE_CLIENT_ID を自分のOAuth Client IDに書き換えること
-     ② authorized JavaScript origins に公開URLを追加すること
-     ====================================================== -->
-<div id="g_id_onload"
-     data-client_id="GOOGLE_CLIENT_ID"
-     data-callback="handleCredential"
-     data-auto_select="true"
-     data-cancel_on_tap_outside="false"
-     data-context="signin">
-</div>
-
 <div class="card">
   <div class="brand">
     <div class="brand-icon">
@@ -201,71 +125,58 @@
     <span class="brand-name">Indeed 新卒事業部</span>
   </div>
   <h1>相場観ツール</h1>
-  <p class="subtitle">ログイン中のGoogleアカウントを確認して<br>適切なダッシュボードに案内します</p>
+  <p class="subtitle" id="subtitle-text">メールアドレスを入力して<br>ダッシュボードにアクセスしてください</p>
 
-  <!-- State: loading -->
+  <!-- Loading -->
   <div id="state-loading" class="state active">
-    <div class="spinner-wrap">
-      <div class="spinner"></div>
-      <p class="loading-text">アカウントを確認中...</p>
-    </div>
-    <!-- GIS One Tap のボタン（自動選択できない場合のフォールバック） -->
-    <div class="g-signin-area" id="signin-fallback" style="display:none;">
-      <p>自動検出できませんでした。Googleアカウントでサインインしてください。</p>
-      <div class="g_id_signin"
-           data-type="standard"
-           data-shape="rectangular"
-           data-theme="outline"
-           data-text="signin_with"
-           data-size="large"
-           data-locale="ja"
-           data-logo_alignment="left">
-      </div>
-    </div>
+    <div class="spinner"></div>
+    <p class="loading-text">確認中...</p>
   </div>
 
-  <!-- State: redirecting -->
+  <!-- Form -->
+  <div id="state-form" class="state">
+    <div id="saved-badge-wrap" style="display:none;">
+      <span class="saved-badge">✓ 前回のアカウントを使用中</span>
+    </div>
+    <label class="form-label" for="emailInput">メールアドレス</label>
+    <input id="emailInput" class="form-input" type="email"
+           placeholder="example@company.co.jp" autocomplete="email" />
+    <p class="form-hint">権限付与済みのメールアドレスを入力してください</p>
+    <button class="btn" id="submitBtn" onclick="submitEmail()">ダッシュボードを開く →</button>
+  </div>
+
+  <!-- Redirect -->
   <div id="state-redirect" class="state">
     <div class="success-icon">✓</div>
     <p class="success-label">アクセス確認済み</p>
-    <p class="success-title" id="redirect-title">ダッシュボードに移動中</p>
-    <p class="success-sub" id="redirect-sub">自動でリダイレクトします...</p>
+    <p class="success-title" id="redirect-title">移動中...</p>
+    <p class="success-sub" id="redirect-sub"></p>
     <div class="progress-bar-wrap"><div class="progress-bar"></div></div>
-    <a class="manual-link" id="redirect-link" href="#" target="_blank">
-      自動で移動しない場合はこちら →
-    </a>
+    <a class="manual-link" id="redirect-link" href="#" target="_blank">自動で移動しない場合はこちら →</a>
   </div>
 
-  <!-- State: error -->
+  <!-- Error -->
   <div id="state-error" class="state">
     <div class="error-icon">🔒</div>
     <p class="error-title">アクセスできません</p>
     <p class="error-msg" id="error-msg"></p>
     <p class="email-tag" id="error-email"></p>
-    <button class="btn-retry" onclick="retrySignin()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.65 6.35A7.958 7.958 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
-      別のアカウントで試す
+    <button class="btn-outline" onclick="resetAndShowForm()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.65 6.35A7.958 7.958 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+      別のメールアドレスで試す
     </button>
   </div>
 
-  <div class="card-footer">
-    アクセス申請は担当者までお問い合わせください
-  </div>
+  <div class="card-footer">アクセス申請は担当者までお問い合わせください</div>
 </div>
 
-<script src="https://accounts.google.com/gsi/client" async defer></script>
 <script>
-// ============================================================
-// リダイレクト先 URL
-// ============================================================
 const URL_INTERNAL = 'https://datastudio.google.com/u/0/reporting/bd8c27bd-18b4-43d6-a581-7ac3da626f1f/page/p_0x50gs0bzd';
 const URL_TOOL_A   = 'https://datastudio.google.com/u/0/reporting/d9090716-b745-41b7-94db-535a98a049cd/page/p_j8if8nhxyd';
 const URL_TOOL_B   = 'https://datastudio.google.com/u/0/reporting/de57c57b-23c0-4e8b-96a6-8c941c677db5/page/p_j8if8nhxyd';
+const STORAGE_KEY  = 'souba_email';
 
-// ============================================================
-// 権限付与一覧（シートから自動生成 — 更新時は generate.py を実行）
-// 生成日時: 2026-06-12 22:03 JST
-// ============================================================
+// 権限付与一覧（生成日時: 2026-06-12 22:32 JST）
 const EMAIL_MAP = {
   '01006857@rtc-rcloud.jp':'A',
   '01027457@rtc-rcloud.jp':'A',
@@ -1890,87 +1801,86 @@ const EMAIL_MAP = {
   'zushi.2489@axia-ag.co.jp':'A'
 };
 
-// ============================================================
-// UI helpers
-// ============================================================
+// ── UI helpers ──────────────────────────────────────────
 function showState(id) {
   document.querySelectorAll('.state').forEach(el => el.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
 
-function showRedirect(url, toolLabel) {
-  document.getElementById('redirect-title').textContent = toolLabel + ' に移動します';
-  document.getElementById('redirect-sub').textContent =
-    '1〜2秒後に自動でリダイレクトします。';
-  const link = document.getElementById('redirect-link');
-  link.href = url;
+function showRedirect(url, label) {
+  document.getElementById('redirect-title').textContent = label;
+  document.getElementById('redirect-sub').textContent   = '1〜2秒後に自動でリダイレクトします';
+  document.getElementById('redirect-link').href         = url;
   showState('state-redirect');
   setTimeout(() => { window.location.href = url; }, 1500);
 }
 
 function showError(msg, email) {
   document.getElementById('error-msg').textContent = msg;
-  document.getElementById('error-email').textContent = email || '';
-  document.getElementById('error-email').style.display = email ? 'inline-block' : 'none';
+  const tag = document.getElementById('error-email');
+  tag.textContent = email || '';
+  tag.style.display = email ? 'inline-block' : 'none';
   showState('state-error');
 }
 
-function retrySignin() {
-  showState('state-loading');
-  document.getElementById('signin-fallback').style.display = 'block';
-  google.accounts.id.prompt();
+function resetAndShowForm() {
+  localStorage.removeItem(STORAGE_KEY);
+  document.getElementById('emailInput').value = '';
+  document.getElementById('saved-badge-wrap').style.display = 'none';
+  document.getElementById('submitBtn').disabled = false;
+  document.getElementById('submitBtn').textContent = 'ダッシュボードを開く →';
+  showState('state-form');
 }
 
-// ============================================================
-// GIS コールバック — One Tap / Sign-in Button 共通
-// ============================================================
-function handleCredential(response) {
-  try {
-    // JWT payload をデコードしてメールを取得
-    const payload = JSON.parse(atob(response.credential.split('.')[1]));
-    const email   = (payload.email || '').trim().toLowerCase();
+// ── Redirect logic ──────────────────────────────────────
+function doRedirect(email) {
+  const normalized = email.trim().toLowerCase();
+  if (!normalized) { showError('メールアドレスが入力されていません。', ''); return; }
 
-    if (!email) {
-      showError('メールアドレスを取得できませんでした。', '');
-      return;
-    }
+  if (normalized.endsWith('@indeed.com')) {
+    localStorage.setItem(STORAGE_KEY, normalized);
+    showRedirect(URL_INTERNAL, '社内用ダッシュボードに移動中');
+    return;
+  }
 
-    // ① Indeed 社内
-    if (email.endsWith('@indeed.com')) {
-      showRedirect(URL_INTERNAL, '社内用ダッシュボード');
-      return;
-    }
-
-    // ② 権限付与一覧で検索
-    const tool = EMAIL_MAP[email];
-    if (tool === 'A') {
-      showRedirect(URL_TOOL_A, '相場観ツールA');
-    } else if (tool === 'B') {
-      showRedirect(URL_TOOL_B, '相場観ツールB');
-    } else {
-      showError(
-        'このアカウントにはアクセス権限が付与されていません。\n担当者にご連絡ください。',
-        email
-      );
-    }
-  } catch (e) {
-    showError('認証処理中にエラーが発生しました: ' + e.message, '');
+  const tool = EMAIL_MAP[normalized];
+  if (tool === 'A') {
+    localStorage.setItem(STORAGE_KEY, normalized);
+    showRedirect(URL_TOOL_A, '相場観ツールA に移動中');
+  } else if (tool === 'B') {
+    localStorage.setItem(STORAGE_KEY, normalized);
+    showRedirect(URL_TOOL_B, '相場観ツールB に移動中');
+  } else {
+    showError('このメールアドレスにはアクセス権限が付与されていません。\n担当者にご連絡ください。', normalized);
   }
 }
 
-// ============================================================
-// ページ読み込み時: One Tap を即時起動
-// ============================================================
-window.addEventListener('load', function() {
-  // GIS ライブラリ読み込み完了後に自動で google.accounts.id.prompt() が発火する
-  // （data-auto_select="true" かつ data-callback 指定済みのため）
+// ── Form submit ─────────────────────────────────────────
+function submitEmail() {
+  const email = document.getElementById('emailInput').value.trim();
+  if (!email) { document.getElementById('emailInput').focus(); return; }
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = '確認中...';
+  showState('state-loading');
+  setTimeout(() => doRedirect(email), 300);
+}
 
-  // 5秒後にボタンフォールバックを表示（One Tap が出ない場合の保険）
-  setTimeout(() => {
-    if (document.getElementById('state-loading').classList.contains('active')) {
-      document.getElementById('signin-fallback').style.display = 'block';
-    }
-  }, 5000);
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('emailInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') submitEmail();
+  });
+
+  // localStorage に保存済みのメールがあれば自動リダイレクト
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved) {
+    document.getElementById('subtitle-text').textContent = '前回のアカウントで自動的に移動します';
+    document.getElementById('saved-badge-wrap').style.display = 'block';
+    document.getElementById('emailInput').value = saved;
+    setTimeout(() => doRedirect(saved), 800);
+  } else {
+    showState('state-form');
+  }
 });
 </script>
 </body>
