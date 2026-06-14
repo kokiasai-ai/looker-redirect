@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>相場観ツール</title>
+  <title>相場ツール</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -95,7 +95,7 @@
     </div>
     <span class="brand-name">Indeed 新卒事業部</span>
   </div>
-  <h1>相場観ツール</h1>
+  <h1>相場ツール</h1>
   <p class="subtitle" id="subtitle-text">メールアドレスを入力して<br>ダッシュボードにアクセスしてください</p>
 
   <div id="state-loading" class="state active">
@@ -1807,10 +1807,10 @@ function doRedirect(email) {
   const tool = EMAIL_MAP[normalized];
   if (tool === 'A') {
     localStorage.setItem(STORAGE_KEY, normalized);
-    showRedirect(URL_TOOL_A, '相場観ツールA に移動中');
+    showRedirect(URL_TOOL_A, '相場ツールA に移動中');
   } else if (tool === 'B') {
     localStorage.setItem(STORAGE_KEY, normalized);
-    showRedirect(URL_TOOL_B, '相場観ツールB に移動中');
+    showRedirect(URL_TOOL_B, '相場ツールB に移動中');
   } else {
     showError('このメールアドレスにはアクセス権限が付与されていません。\n担当者にご連絡ください。', normalized);
   }
@@ -1828,15 +1828,17 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('emailInput').addEventListener('keydown', function(e) {
     if (e.key === 'Enter') submitEmail();
   });
-  const saved = localStorage.getItem(STORAGE_KEY);
-  if (saved) {
-    document.getElementById('subtitle-text').textContent = '前回のアカウントで自動的に移動します';
-    document.getElementById('saved-badge-wrap').style.display = 'block';
-    document.getElementById('emailInput').value = saved;
-    setTimeout(() => doRedirect(saved), 800);
-  } else {
-    showState('state-form');
-  }
+  // ── localStorage自動リダイレクト（テスト中のため一時停止）──
+  // const saved = localStorage.getItem(STORAGE_KEY);
+  // if (saved) {
+  //   document.getElementById('subtitle-text').textContent = '前回のアカウントで自動的に移動します';
+  //   document.getElementById('saved-badge-wrap').style.display = 'block';
+  //   document.getElementById('emailInput').value = saved;
+  //   setTimeout(() => doRedirect(saved), 800);
+  // } else {
+  //   showState('state-form');
+  // }
+  showState('state-form');
 });
 </script>
 </body>
