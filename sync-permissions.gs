@@ -123,13 +123,14 @@ function fetchEmailMap_() {
   return map;
 }
 
-// ── 内部: JSマップ文字列を生成 ────────────────────────────
+// ── 内部: JSハッシュマップ文字列を生成（SHA-256で匿名化）─────────
 function buildJsMap_(emailMap) {
   const entries = Object.keys(emailMap).sort().map(email => {
-    const safe = email.replace(/'/g, "\\'");
-    return `  '${safe}':'${emailMap[email]}'`;
+    const hashBytes = Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, email, Utilities.Charset.UTF_8);
+    const hash = hashBytes.map(b => ('0' + (b & 0xff).toString(16)).slice(-2)).join('');
+    return `  '${hash}':'${emailMap[email]}'`;
   });
-  return `const EMAIL_MAP = {\n${entries.join(',\n')}\n};`;
+  return `const EMAIL_HASH_MAP = {\n${entries.join(',\n')}\n};`;
 }
 
 // ── トリガー設定（初回1回だけ手動実行） ──────────────────

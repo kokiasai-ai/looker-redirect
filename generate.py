@@ -58,13 +58,14 @@ def fetch_email_map(token):
     print(f'  シート読み込み完了: {len(email_map)} 件 (A:{count_a}, B:{count_b})')
     return email_map
 
-# ─── 3. JS マップ文字列を生成 ─────────────────────────────
+# ─── 3. JS ハッシュマップ文字列を生成（SHA-256でメール匿名化）─────
 def build_js_map(email_map):
+    import hashlib
     entries = []
     for email, tool in sorted(email_map.items()):
-        safe = email.replace("'", "\\'")
-        entries.append(f"  '{safe}':'{tool}'")
-    return "const EMAIL_MAP = {\n" + ",\n".join(entries) + "\n};"
+        h = hashlib.sha256(email.encode()).hexdigest()
+        entries.append(f"  '{h}':'{tool}'")
+    return "const EMAIL_HASH_MAP = {\n" + ",\n".join(entries) + "\n};"
 
 # ─── 4. HTML を生成 ──────────────────────────────────────
 def generate_html(js_map, generated_at):
