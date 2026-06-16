@@ -29,11 +29,13 @@
     h1 { font-size: 22px; font-weight: 700; color: #111827; margin: 4px 0 6px; }
     .subtitle { font-size: 13px; color: #6b7280; line-height: 1.6; margin-bottom: 12px; }
     .description {
-      font-size: 12px; color: #9ca3af; line-height: 1.8;
+      font-size: 12px; color: #6b7280; line-height: 1.8;
       background: #f9fafb; border-radius: 8px;
-      padding: 12px 14px; margin-bottom: 28px;
+      padding: 12px 16px; margin-bottom: 28px;
       text-align: left; border-left: 3px solid #bfdbfe;
     }
+    .description ul { padding-left: 16px; }
+    .description li { margin-bottom: 2px; }
     .state { display: none; }
     .state.active { display: block; }
     .spinner {
@@ -120,7 +122,13 @@
   </div>
   <h1>相場ツール</h1>
   <p class="subtitle" id="subtitle-text">メールアドレスを入力して<br>ダッシュボードにアクセスしてください</p>
-  <p class="description">申請したメールアドレスによって利用できるURLが異なります。このページは、申請アカウントに対応した相場ツールへ自動で遷移させるものです。遷移先のURLをブックマークする等のご対応をお願いします。</p>
+  <div class="description">
+    <ul>
+      <li>申請したメールアドレスによって、利用できるURLが異なります</li>
+      <li>このページは、申請アカウントに対応した相場ツールへ自動で遷移させるものです</li>
+      <li>遷移先のURLをブックマークする等のご対応をお願いします</li>
+    </ul>
+  </div>
 
   <div id="state-loading" class="state active">
     <div class="spinner"></div>
